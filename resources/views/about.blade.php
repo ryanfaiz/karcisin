@@ -92,7 +92,7 @@
             <div class="col-md-3 mb-3">
                 <i class="bi bi-whatsapp fs-2 text-primary d-block mb-2"></i>
                 <h6 class="fw-bold">WhatsApp</h6>
-                <p class="small text-muted">+62 812-3456-7890</p>
+                <p class="small text-muted">+62 813-8073-1465</p>
             </div>
         </div>
     </div>
