@@ -27,7 +27,7 @@
             <div class="container">
                 <!-- LOGO KIRI -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('img/karcisin_logo_panjang.png') }}" 
+                    <img src="{{ asset('img/karcisin_logotype.png') }}" 
                          alt="Karcis.in" 
                          style="height: 40px; width: auto;"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
