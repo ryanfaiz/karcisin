@@ -32,14 +32,14 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <!-- 2. MENU TENGAH -->
-                    <ul class="navbar-nav mx-auto">
+                    <ul class="navbar-nav mx-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/') }}">
                                 <i class="bi bi-compass"></i> Jelajahi Event
                             </a>
                         </li>
                         
-                        <!-- HANYA TAMPIL JIKA LOGIN SEBAGAI CREATOR -->
+                        <!-- Menu Buat Event (Khusus Creator) -->
                         @if(Auth::check() && Auth::user()->role == 'creator')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('event.create') }}">
@@ -48,11 +48,18 @@
                             </li>
                         @endif
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-search"></i> Cari Event
-                            </a>
+                        <!-- FORM PENCARIAN (INI YANG BARU) -->
+                        <li class="nav-item ms-2 me-2">
+                            <form action="{{ route('welcome') }}" method="GET" class="d-flex">
+                                <div class="input-group">
+                                    <input type="text" name="search" class="form-control form-control-sm border-primary" placeholder="Cari event..." aria-label="Cari event" value="{{ request('search') }}">
+                                    <button class="btn btn-primary btn-sm" type="submit">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">Tentang Karcisin</a>
                         </li>
@@ -76,10 +83,9 @@
 
                                 <div class="dropdown-menu dropdown-menu-end shadow border-0">
                                     
-                                    <!-- KHUSUS DEVELOPER (ganadzikri@gmail.com) - SUDAH DIPERBAIKI -->
+                                    <!-- KHUSUS DEVELOPER -->
                                     @if(Auth::user()->email == 'ganadzikri@gmail.com')
                                         <div class="dropdown-header text-primary fw-bold">👑 MODE DEVELOPER</div>
-                                        <!-- Perbaikan: href mengarah ke route developer.index -->
                                         <a class="dropdown-item" href="{{ route('developer.index') }}">
                                             <i class="bi bi-shield-lock"></i> Approval Event
                                         </a>
@@ -128,18 +134,19 @@
                 <div class="row">
                     <div class="col-md-4 mb-4">
                         <h4 class="fw-bold mb-3">Karcis.in</h4>
-                        <p class="text-white-50">Platform E-Ticketing Event Kampus Terlengkap & Ekonomis.</p>
+                        <p class="text-white-50">Platform E-Ticketing Event, Tempat Wisata, dan Semua Acara Terlengkap & Ekonomis. Solusi digital untuk event masa kini.</p>
                     </div>
                     <div class="col-md-4 mb-4">
                         <h5 class="fw-bold mb-3">Ikuti Kami</h5>
                         <ul class="list-unstyled text-white-50">
                             <li class="mb-2"><i class="bi bi-instagram me-2"></i> @karcis.in</li>
                             <li class="mb-2"><i class="bi bi-envelope me-2"></i> support@karcis.in</li>
+                            <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> +62 813-8073-1465</li>
                         </ul>
                     </div>
                     <div class="col-md-4 mb-4">
                         <h5 class="fw-bold mb-3">Lokasi</h5>
-                        <p class="text-white-50">Kampus Dramaga, Bogor, Jawa Barat.</p>
+                        <p class="text-white-50">Bogor, Indonesia.</p>
                     </div>
                 </div>
                 <div class="border-top border-secondary pt-4 text-center text-white-50">

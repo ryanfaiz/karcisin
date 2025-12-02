@@ -49,6 +49,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::post('/event/store', [EventController::class, 'store'])->name('event.store');
     
+
+    // FITUR EDIT & HAPUS EVENT (BARU)
+    Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
+    Route::put('/event/{id}', [EventController::class, 'update'])->name('event.update');
+    Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('event.destroy');
+
     // Kelola Event (Detail & List Peserta)
     Route::get('/event/{id}/manage', [EventController::class, 'show'])->name('event.show');
     

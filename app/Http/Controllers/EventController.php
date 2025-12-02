@@ -72,6 +72,79 @@ class EventController extends Controller
         return redirect()->route('home')->with('success', 'Event berhasil diajukan! Menunggu persetujuan Developer.');
     }
 
+    // 3a. Halaman Form Edit Event
+    public function edit($id)
+    {
+        // Cari event dan pastikan milik user yang sedang login
+        $event = Event::where('id', $id)->where('created_by', Auth::id())->firstOrFail();
+        return view('creator.edit', compact('event'));
+    }
+
+    // 3b. Proses Update Event
+    public function update(Request $request, $id)
+    {
+        $event = Event::where('id', $id)->where('created_by', Auth::id())->firstOrFail();
+
+        // Validasi (Banner boleh kosong saat edit)
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required',
+            'description' => 'required',
+            'event_date' => 'required',
+            'location' => 'required',
+            'price' => 'required|numeric',
+            'quota' => 'required|numeric',
+            'banner' => 'nullable|image|max:2048', // Banner opsional
+        ]);
+
+        // Update data dasar
+        $event->name = $request->name;
+        $event->category = $request->category;
+        $event->description = $request->description;
+        $event->event_date = $request->event_date;
+        $event->location = $request->location;
+        $event->price = $request->price;
+        $event->quota = $request->quota;
+
+        // Cek jika ada upload banner baru
+        if ($request->hasFile('banner')) {
+            // Hapus banner lama jika ada (Opsional, biar hemat storage)
+            // if ($event->banner) Storage::delete('public/' . $event->banner);
+            
+            // Upload baru
+            $bannerPath = $request->file('banner')->store('banners', 'public');
+            $event->banner = $bannerPath;
+        }
+
+        // Opsional: Kembalikan status ke pending jika diedit agar direview ulang
+        // $event->status = 'pending'; 
+
+        $event->save();
+
+        return redirect()->route('event.show', $id)->with('success', 'Event berhasil diperbarui!');
+    }
+
+    // 3c. Proses Hapus Event
+    public function destroy($id)
+    {
+        $event = Event::where('id', $id)->where('created_by', Auth::id())->firstOrFail();
+
+        // Hapus data terkait (Tiket & Transaksi) agar tidak error Foreign Key
+        // 1. Ambil semua transaksi ID dari event ini
+        $transactionIds = \App\Models\Transaction::where('event_id', $event->id)->pluck('id');
+        
+        // 2. Hapus Tiket yang terkait dengan transaksi tersebut
+        Ticket::whereIn('transaction_id', $transactionIds)->delete();
+
+        // 3. Hapus Transaksi
+        \App\Models\Transaction::where('event_id', $event->id)->delete();
+
+        // 4. Hapus Event
+        $event->delete();
+
+        return redirect()->route('home')->with('success', 'Event berhasil dihapus.');
+    }
+
     // 4. Detail Event & Manajemen
     public function show($id)
     {

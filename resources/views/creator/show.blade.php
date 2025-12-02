@@ -5,11 +5,13 @@
     <a href="{{ route('home') }}" class="btn btn-outline-secondary mb-3">&larr; Kembali ke Dashboard</a>
 
     <div class="row">
+        <!-- DETAIL EVENT (KIRI) -->
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <img src="{{ $event->banner ? asset('storage/'.$event->banner) : 'https://via.placeholder.com/400x200' }}" class="card-img-top">
                 <div class="card-body">
                     <h4 class="card-title">{{ $event->name }}</h4>
+                    <span class="badge bg-primary mb-2">{{ $event->category }}</span>
                     <p class="text-muted mb-2">
                         📅 {{ \Carbon\Carbon::parse($event->event_date)->format('d M Y, H:i') }} WIB
                     </p>
@@ -26,15 +28,28 @@
                         <span>{{ $event->quota }} Tiket</span>
                     </div>
 
+                    <!-- TOMBOL AKSI (SUDAH DIPERBAIKI) -->
                     <div class="mt-4">
-                        <button class="btn btn-warning w-100 mb-2">Edit Event (Coming Soon)</button>
-                        <button class="btn btn-danger w-100">Hapus Event (Coming Soon)</button>
+                        <!-- Tombol Edit -->
+                        <a href="{{ route('event.edit', $event->id) }}" class="btn btn-warning w-100 mb-2 fw-bold">
+                            <i class="bi bi-pencil-square"></i> Edit Event
+                        </a>
+
+                        <!-- Tombol Hapus (Pakai Form agar aman) -->
+                        <form action="{{ route('event.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Yakin ingin MENGHAPUS event ini? \n\nPERINGATAN: Data tiket dan transaksi terkait juga akan terhapus!');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger w-100 fw-bold">
+                                <i class="bi bi-trash"></i> Hapus Event
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
-<div class="col-md-8">
+        <!-- TABEL PEMBELI (KANAN) -->
+        <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-white">
                     <h5 class="mb-0">Daftar Pembeli Tiket</h5>
@@ -99,4 +114,6 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
 @endsection
