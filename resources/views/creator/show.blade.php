@@ -48,7 +48,7 @@
             </div>
         </div>
 
-       <!-- TABEL PEMBELI (KANAN) -->
+        <!-- TABEL PEMBELI (KANAN) -->
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">

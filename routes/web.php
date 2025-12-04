@@ -57,6 +57,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Kelola Event (Detail & List Peserta)
     Route::get('/event/{id}/manage', [EventController::class, 'show'])->name('event.show');
+
+    //Download Excel
+    Route::get('/event/{id}/export-excel', [EventController::class, 'exportTickets'])->name('creator.export.excel');
     
     // Approve Pembayaran User
     Route::post('/transaction/{id}/approve', [EventController::class, 'approveTransaction'])->name('transaction.approve');
@@ -64,9 +67,6 @@ Route::middleware(['auth'])->group(function () {
     // Scanner Tiket Per Event
     Route::get('/event/{id}/scan', [EventController::class, 'scanPage'])->name('event.scan');
     Route::post('/scan/verify', [EventController::class, 'verifyTicket'])->name('scan.verify');
-
-    //Download Excel
-    Route::get('/event/{id}/export-excel', [EventController::class, 'exportTickets'])->name('creator.export.excel');
     
     // --- TAMBAHAN PENTING (SCANNER UMUM) ---
     // Tambahkan ini agar error 'scan.index not defined' hilang
