@@ -48,11 +48,16 @@
             </div>
         </div>
 
-        <!-- TABEL PEMBELI (KANAN) -->
+       <!-- TABEL PEMBELI (KANAN) -->
         <div class="col-md-8">
             <div class="card shadow-sm">
-                <div class="card-header bg-white">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Daftar Pembeli Tiket</h5>
+                    
+                    <!-- TOMBOL EXCEL -->
+                    <a href="{{ route('creator.export.excel', $event->id) }}" class="btn btn-success btn-sm">
+                        <i class="bi bi-file-earmark-excel"></i> Export Excel
+                    </a>
                 </div>
                 <div class="card-body">
                     @if($event->transactions->isEmpty())
