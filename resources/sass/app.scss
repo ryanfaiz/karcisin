@@ -1,12 +1,11 @@
-// Fonts
+// Fonts (keep as a plain CSS import)
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-// Variables
-$font-family-sans-serif: 'Poppins', sans-serif;
-$primary: #0118d8; // Warna Khas Karcis.in
-
-// Bootstrap
-@import 'bootstrap/scss/bootstrap';
+// Configure Bootstrap using the Sass module system to avoid @import deprecations
+@use "bootstrap" with (
+    $font-family-sans-serif: ('Poppins', sans-serif),
+    $primary: #0118d8
+);
 
 // Custom Styles
 body {
